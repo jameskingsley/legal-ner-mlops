@@ -15,3 +15,4 @@ Thumbs.db
 
 # ClearML local config (Do NOT push your keys!)
 clearml.conf
+/data
