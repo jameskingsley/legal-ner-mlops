@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: legal-ner-api
+    env: python
+    buildCommand: pip install -r requirements_render.txt
+    startCommand: uvicorn src.api.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: CLEARML_API_ACCESS_KEY
+        sync: false 
+      - key: CLEARML_API_SECRET_KEY
+        sync: false 
+      - key: CLEARML_API_HOST
+        value: https://api.clear.ml

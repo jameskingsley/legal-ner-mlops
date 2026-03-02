@@ -1,0 +1,17 @@
+# Environments
+venv/
+.env
+__pycache__/
+*.pyc
+
+# Data & Models (DVC handles these)
+data/
+models/*.joblib
+models/*.pkl
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# ClearML local config (Do NOT push your keys!)
+clearml.conf

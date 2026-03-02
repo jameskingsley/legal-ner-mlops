@@ -1,0 +1,26 @@
+# Data & Versioning
+dataset
+dvc
+dvc-s3  
+pandas
+numpy
+
+# MLOps & Orchestration
+prefect
+clearml
+joblib
+
+# Machine Learning
+scikit-learn
+scipy
+
+# API & Backend
+fastapi
+uvicorn
+python-multipart
+pydantic
+
+# UI
+streamlit
+requests
+streamlit-extras

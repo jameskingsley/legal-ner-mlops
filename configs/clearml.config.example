@@ -1,0 +1,5 @@
+api {
+    access_key = "REPLACE_WITH_YOUR_ACCESS_KEY"
+    secret_key = "REPLACE_WITH_YOUR_SECRET_KEY"
+    host = "https://api.clear.ml"
+}
