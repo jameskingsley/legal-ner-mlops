@@ -27,7 +27,7 @@ API_URL = "https://legal-ner-mlops.onrender.com"
 
 st.title("SCOTUS Case Classifier")
 st.markdown(f"""
-This dashboard connects to your **Production API on Render**.
+This dashboard connects to the **Production API on Render**.
 It utilizes the **Champion Model** (SVM) and labels pulled dynamically from **ClearML**.
 Currently connected to: `{API_URL}`
 """)
