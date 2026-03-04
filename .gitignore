@@ -8,7 +8,7 @@ __pycache__/
 data/
 models/*.joblib
 models/*.pkl
-
+gdrive-key.json
 # OS files
 .DS_Store
 Thumbs.db
@@ -16,3 +16,4 @@ Thumbs.db
 # ClearML local config (Do NOT push your keys!)
 clearml.conf
 /data
+/models

@@ -1,4 +1,8 @@
 [core]
-    remote = myremote
+    remote = origin
 ['remote "myremote"']
     url = gdrive://1NE5LIPmxnxWxoh7kE-dEf-Pvm-Bokh7l
+    gdrive_acknowledge_abuse = true
+['remote "origin"']
+    url = s3://legal-ner-mlops
+    endpointurl = https://dagshub.com/api/v1/repo-buckets/s3/jameskingsley
