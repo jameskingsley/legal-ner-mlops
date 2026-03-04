@@ -9,7 +9,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import accuracy_score
-from clearml import Task, OutputModel
+from clearml import Task
 from prefect import flow, task
 
 # Professional Label Mapping for SCOTUS Dataset
@@ -23,10 +23,14 @@ SCOTUS_LABELS = {
 
 @task(log_prints=True)
 def run_model_tournament():
-    # 1. Initialize ClearML Task
-    task_cl = Task.init(project_name="Legal-NER-MLOps", task_name="Legal-Model-Tournament")
+    # 1. Initialize ClearML Task with output_uri=True for Cloud Storage
+    task_cl = Task.init(
+        project_name="Legal-NER-MLOps", 
+        task_name="Legal-Model-Tournament",
+        output_uri=True  # 👈 CRITICAL: This uploads the file to ClearML Cloud
+    )
     
-    # Store labels in the Task Configuration so they are saved forever with this run
+    # Store labels in the Task Configuration
     task_cl.connect(SCOTUS_LABELS, name="labels")
     
     # Check for data
@@ -35,7 +39,7 @@ def run_model_tournament():
         print(">>> Data missing. Running ingestion...")
         ingestion_pipeline()
     
-    # Load 5,000 rows
+    # Load 5,000 rows for tournament speed
     train_df = pd.read_csv(train_path).sample(n=5000, random_state=42)
     test_df = pd.read_csv("data/raw/test.csv").sample(n=1000, random_state=42)
 
@@ -68,19 +72,20 @@ def run_model_tournament():
 
     # Register the Champion
     print(f"\nWINNER: {winner_name}")
+    # We bundle the vectorizer and the model into one file
     final_pipeline = Pipeline([('tfidf', tfidf), ('clf', winner_model)])
     
     model_path = "models/best_legal_model.joblib"
     os.makedirs("models", exist_ok=True)
     joblib.dump(final_pipeline, model_path)
 
-    # Registration
-    output_model = OutputModel(task=task_cl)
-    # Simple upload - no extra arguments to avoid TypeError
-    output_model.update_weights(weights_filename=model_path, auto_delete_file=False)
+    # Simplified Cloud Upload
+    # ClearML automatically detects the joblib.dump and uploads it because output_uri=True
+    task_cl.update_output_model(model_path, name="Champion-Legal-Model")
     
+    # Auto-tagging for the API
     task_cl.add_tags(["champion", winner_name])
-    print(f">>> Model registered and uploaded to ClearML.")
+    print(f">>> Model registered and uploaded to ClearML Cloud.")
 
 @flow(name="Tournament-Flow")
 def run_pipeline():
