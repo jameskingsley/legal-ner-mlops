@@ -20,7 +20,7 @@ st.markdown("""
         color: white;
     }
     </style>
-    """, unsafe_allow_value=True)
+    """, unsafe_allow_html=True)
 
 # Update this to your ACTUAL Render URL
 API_URL = "https://legal-ner-mlops.onrender.com"
